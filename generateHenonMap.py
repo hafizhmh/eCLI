@@ -8,11 +8,11 @@ def dec(bitSequence):
 
 
 #Takes size of the image as an input
-def genTransformationMatrix(width, height):
+def genTransformationMatrix(width, height, x=0.1, y=0.1):
     #Replace Hardcoded Pixel Values
     #Serves as the initial Parameter and also the symmetric secret key
-    x = 0.1
-    y = 0.1
+    # x = 0.1
+    # y = 0.1
     sequenceSize = width * height * 8 #Total Number of bitSequence produced
     bitSequence = []    #Each bitSequence contains 8 bits
     byteArray = []      #Each byteArray contains m( i.e 512 in this case) bitSequence

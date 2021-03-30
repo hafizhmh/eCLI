@@ -2,10 +2,10 @@ import generateHenonMap as ghm
 from PIL import Image
 import os
 
-def decryptHenonImage(imageMatrix):
+def decryptHenonImage(imageMatrix, x, y):
     width = len(imageMatrix)
     height = len(imageMatrix[0])
-    transformationMatrix = ghm.genTransformationMatrix(width, height)
+    transformationMatrix = ghm.genTransformationMatrix(width, height, x, y)
     print("ImageMatrix Rows : %d Cols : %d " % (width, height))
     print("Transformation Matrix Rows : %d Cols : %d" %(width,height))
     #Performing Ex-Or Operation between the ImageMatrix and transformation Matrix

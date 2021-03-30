@@ -18,7 +18,7 @@ def eH(filePath):
     # path reader
     imageMatrix = cim.getImageMatrix(filePath)    
     # process
-    resImage = iT.pixelManipulation(imageMatrix)
+    resImage = iT.pixelManipulation(imageMatrix, x, y)
     # saver
     savepath = IMSaver(resImage, fileName+"_eH")
     print('Henon ended {}\n'.format(time.time()-start_time))
@@ -33,7 +33,7 @@ def dH(filePath):
     # path reader
     imageMatrix = cim.getImageMatrix(filePath)
     # process
-    resImage = hD.decryptHenonImage(imageMatrix)
+    resImage = hD.decryptHenonImage(imageMatrix, x, y)
     # saver
     savepath = IMSaver(resImage, fileName+"_dH")
     print('Henon ended {}\n'.format(time.time()-start_time))
@@ -125,7 +125,7 @@ def eHA(filePath):
     # path reader
     imageMatrix = cim.getImageMatrix(filePath)    
     # process: Henon
-    resImage = iT.pixelManipulation(imageMatrix)
+    resImage = iT.pixelManipulation(imageMatrix, x, y)
     # process: Arnold
     width = len(resImage)
     height = len(resImage[0])
@@ -156,10 +156,10 @@ def dAH(filePath):
     arnoldList = arnoldDeBuilder(parted)    
     tmp = part_joiner(arnoldList, sp)
     # process: Henon
-    resImage = hD.decryptHenonImage(tmp)
+    resImage = hD.decryptHenonImage(tmp, x, y)
     # saver
     savepath = IMSaver(resImage, fileName+"_dAH")
-    print('Arnold ended {}\n'.format(time.time()-start_time))
+    print('Arnold-Henon ended {}\n'.format(time.time()-start_time))
     return savepath
 
 def arnoldEnBuilder(parted, fileName="aaa"):
@@ -221,6 +221,12 @@ parser.add_argument('mode', help=
 parser.add_argument('numberOfIterations', default=1, const=1, nargs='?', help='''Number of Arnold shuffle iteration, not required for Henon.
 Passed as 1 when no argument is passed''',
 type=int)
+parser.add_argument('x', default=0.1, const=1, nargs='?', help='''Initial value for Henon map, not required for Arnold.
+Passed as 0.1 when no argument is passed''',
+type=float)
+parser.add_argument('y', default=0.1, const=1, nargs='?', help='''Initial value for Henon map, not required for Arnold.
+Passed as 0.1 when no argument is passed''',
+type=float)
 args=parser.parse_args()
 
 filename=os.path.split(args.path)[-1]
@@ -233,6 +239,8 @@ if not os.path.exists(targetpath):
     print(targetpath)
     shutil.copyfile(args.path, targetpath)
 
+x=args.x
+y=args.y
 if (args.mode =='eH'):
     print(eH(args.path))
 elif (args.mode =='dH'):
